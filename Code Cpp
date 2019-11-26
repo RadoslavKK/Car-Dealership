@@ -1,0 +1,264 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <stdlib.h>
+#include <fstream>
+
+using namespace std;
+
+int main()
+{
+    ofstream masterfile("Cars.txt");
+
+    cout << "*---------------------------------------*\n"
+         << "*                                       *\n";
+    if (masterfile.is_open()){
+      cout << "* You have a File                       *\n";
+    }else {
+      cout << "* You Don't have a File                 *\n";
+    };
+
+    cout << "*                                       *\n"
+         << "*---------------------------------------*\n\n";
+
+    int a,lenmaster,lenslave,counter,store;
+
+        lenmaster=lenslave=counter=store=a=0;
+
+    int b,d;
+
+        b=5;
+        d=1;
+
+        string enter,visual;
+
+        enter = "";
+        visual = " ";
+
+    cout << "*---------------------------------------*\n"
+         << "*                                       *\n"
+         << "*          ***** Hello *****            *\n"
+         << "*                                       *\n"
+         << "* You are creating an array             *\n"
+         << "* the maximum number of elements is 40  *\n"
+         << "*                                       *\n"
+         << "*---------------------------------------*\n\n";
+
+    do{
+      cout << "Enter the Number of Elements = "; 
+      cin >> a;
+    }while ((a>40) || (a<1));
+
+    string arraymaster[a][b];
+
+    for(int i = 0; i < a; i++){
+      cout << "\nArray Element = " << d << "\n\n";
+      for(int j = 0; j < b; j++){
+        lenmaster=0;
+        counter = 0;
+
+        if (j==0) {
+          do{
+            cout << "Registration Number = ";
+            cin >> arraymaster[i][j];
+            lenmaster=arraymaster[i][j].size();
+          }while (lenmaster != 7);
+          arraymaster[i][j] = arraymaster[i][j] + "                   ";
+        };
+
+         if (j==1) {
+           do{
+             cout << "Year  = ";
+             cin >> arraymaster[i][j];
+             lenmaster=arraymaster[i][j].size();
+           }while (lenmaster != 4);
+           arraymaster[i][j] = arraymaster[i][j] + "            ";
+         };
+
+          if (j==2) {
+            lenslave = 10;
+            cout << "Price = ";
+            cin >> arraymaster[i][j];
+            lenmaster=arraymaster[i][j].size();
+            if (lenslave > lenmaster) {
+              lenslave = lenslave - lenmaster;
+              do{
+                arraymaster[i][j] = arraymaster[i][j] + visual;
+                counter ++;
+              }while(counter < lenslave);
+            };
+            arraymaster[i][j] = arraymaster[i][j] + "            ";
+          };
+
+           if (j==3) {
+             lenslave = 20;
+             cout << "Brand = ";
+             cin >> arraymaster[i][j];
+             lenmaster=arraymaster[i][j].size();
+             if (lenslave > lenmaster) {
+               lenslave = lenslave - lenmaster;
+               do{
+                 arraymaster[i][j] = arraymaster[i][j] + visual;
+                 counter ++;
+               }while(counter < lenslave);
+             };
+             arraymaster[i][j] = arraymaster[i][j] + "            ";
+           };
+
+            if (j==4) {
+              lenslave = 20;
+              do{
+                cout << "Store = ";
+                cin >> arraymaster[i][j];
+                lenmaster=arraymaster[i][j].size();
+              }while(lenmaster > lenslave);
+            };
+      };
+      d=d+1;
+    };
+
+    cout << "\nRoll // Registration Number    // Year         // Price              // Brand                        // Store\n\n";
+
+    masterfile << "Roll // Registration Number    // Year         // Price              // Brand                        // Store\n\n";
+
+    for(int i = 0; i < a; i++){
+
+      visual = (i < 9)? "     " : "    ";
+      cout << "  " << i + 1 << visual;
+      masterfile << "  " << i + 1 << visual;
+
+
+      for(int j = 0; j < b; j++){
+        cout << arraymaster[i][j];
+        masterfile << arraymaster[i][j];
+      };
+      cout << endl;
+      masterfile << endl;
+    };
+
+    masterfile.close();
+
+    cout << "\n*---------------------------------------*\n"
+         << "*                                       *\n"
+         << "*          ***** Menu *****             *\n"
+         << "*                                       *\n"
+         << "* store  // Store Search                *\n"
+         << "* price  // Price Search                *\n"
+         << "* array  // See Array                   *\n"
+         << "* cls    // Clear Screen                *\n"
+         << "* Exit   // to the Exit the Program     *\n"
+         << "*                                       *\n"
+         << "*---------------------------------------*\n\n";
+
+    do{
+      do{
+        cout << "Enter = ";
+        cin >> enter;
+      }while (!(enter=="store") && !(enter=="price") && !(enter=="cls") && !(enter=="array") && !(enter=="exit"));
+
+      if (enter=="store"){
+      
+        cout << "\nEnter the Name of the Store = ";
+        cin >> enter;
+
+        cout << "\nRoll // Registration Number    // Year         // Price              // Brand                        // Store\n\n";
+
+        int j=4;
+        for(int i = 0; i < a; i++){
+          if (enter == arraymaster[i][j]){
+            visual = (i < 9)? "     " : "    ";
+            cout << "  " << i + 1 << visual;
+            for(int j = 0; j < b; j++){
+              cout << arraymaster[i][j];
+            };
+            cout << endl;
+          };
+        };
+        cout << endl;
+      };
+
+      if (enter=="price"){
+
+        string brand,brandslave;
+        brand = brandslave = "";
+
+        float price = 0;
+        int year = 0;
+
+        cout << "\nEnter the Year  = ";
+        cin >> year;
+
+        cout << "\nEnter the Brand = ";
+        cin >> brand;
+
+        lenslave = 32;
+
+        lenmaster=brand.size();
+        visual = " ";
+
+        if (lenslave > lenmaster) {
+          lenslave = lenslave - lenmaster;
+            do{
+              brand = brand + visual;
+              counter ++;
+            }while(counter < lenslave);
+        }
+
+        int linemax,iflinemax;
+        linemax=iflinemax=0;
+
+        for (int as=0; as < a; as++){
+
+          int yearslave = atoi(arraymaster[as][1].c_str());
+
+          if (year == yearslave){
+            if (brand == arraymaster[as][3]){
+              float priceslave = atoi(arraymaster[as][2].c_str());  
+                if (iflinemax == 0){
+                  price = priceslave;
+                  linemax = as;
+                  iflinemax ++;
+                }else {
+                if (priceslave < price){
+                  price = priceslave;
+                  linemax = as;
+                };
+              };
+            };
+          };
+        };
+
+        if (iflinemax != 0){
+          cout << "\nRoll // Registration Number    // Year         // Price              // Brand                        // Store\n\n";
+          visual = (linemax < 9)? "     " : "    ";
+          cout << "  " << linemax + 1 << visual;
+          for (int j=0; j<b; j++){
+            cout << arraymaster[linemax][j];
+          };
+        };
+        cout << endl;
+      };
+
+      if (enter=="array"){
+        cout << "\nRoll // Registration Number    // Year         // Price              // Brand                        // Store\n\n";
+
+        for(int i = 0; i < a; i++){
+          visual = (i < 9)? "     " : "    ";
+          cout << "  " << i + 1 << visual;
+
+          for(int j = 0; j < b; j++){
+            cout << arraymaster[i][j];
+          };
+          cout << endl;
+        };
+        cout << endl;
+      };
+
+      if (enter=="cls"){
+        system("cls");
+      };
+
+    }while (enter!="exit");
+
+    return 0;
+}
